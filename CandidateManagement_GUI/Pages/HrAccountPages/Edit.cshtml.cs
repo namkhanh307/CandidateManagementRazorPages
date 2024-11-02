@@ -62,7 +62,7 @@ namespace CandidateManagement_GUI.Pages.HrAccountPages
                 }
             }
 
-            return RedirectToPage("./Edit");
+            return RedirectToPage("/CandidateProfilePages/Index");
         }
 
         private bool HraccountExists(string email)

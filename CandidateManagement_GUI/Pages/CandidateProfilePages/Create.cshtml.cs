@@ -32,16 +32,22 @@ namespace CandidateManagement_GUI.Pages.CandidateProfilePages
         {
             if (!ModelState.IsValid || _candidateProfileService.GetCandidateProfiles() == null || CandidateProfile == null)
             {
+                PopulateJobPostings();
                 return Page();
             }
             var existedCandidate = _candidateProfileService.GetCandidateProfileById(CandidateProfile.CandidateId);
             if (existedCandidate != null)
             {
                 ModelState.AddModelError("CandidateProfile.CandidateId", "A candidate with this ID already exists.");
+                PopulateJobPostings();
                 return Page();
             }
             _candidateProfileService.AddCandidateProfile(CandidateProfile);
             return RedirectToPage("./Index");
+        }
+        private void PopulateJobPostings()
+        {
+            ViewData["PostingId"] = new SelectList(_jobPostingService.GetJobPostings(), "PostingId", "JobPostingTitle");
         }
     }
 }
