@@ -32,7 +32,7 @@ namespace CandidateManagement_GUI.Pages.LoginPages
                 else
                     Response.Redirect("/Error");
             }
-            
+
         }
         public void OnGetLogout()
         {
