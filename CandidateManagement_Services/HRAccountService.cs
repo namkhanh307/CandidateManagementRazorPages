@@ -14,5 +14,7 @@ namespace CandidateManagement_Services
 
         public Hraccount GetHraccountByEmail(string email) => _repo.GetHraccountByEmail(email);
         public IEnumerable<Hraccount> GetHraccounts() => _repo.GetHraccounts();
+        public bool UpdateHrAccount(string email, string fullName, string password) => _repo.UpdateHrAccount(email, fullName, password);
+
     }
 }

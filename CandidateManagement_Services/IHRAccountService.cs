@@ -6,5 +6,7 @@ namespace CandidateManagement_Services
     {
         Hraccount GetHraccountByEmail(string email);
         IEnumerable<Hraccount> GetHraccounts();
+        bool UpdateHrAccount(string email, string fullName, string password);
+
     }
 }

@@ -44,18 +44,15 @@ namespace CandidateManagement_GUI.Pages.JobPostingPages
             }
 
             bool updateSuccess = _jobPostingService.UpdateJobPosting(JobPosting);
-            //Lỗi dưới DAO à , đợi chút xíu nhé
 
             if (!updateSuccess)
             {
-                // Kiểm tra nếu CandidateProfile không tồn tại
                 if (!JobPostingExists(JobPosting.PostingId))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    // Throw exception hoặc ghi log nếu cần thiết
                     throw new DbUpdateConcurrencyException();
                 }
             }

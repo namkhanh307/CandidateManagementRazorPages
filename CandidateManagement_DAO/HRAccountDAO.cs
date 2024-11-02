@@ -4,7 +4,7 @@ namespace CandidateManagement_DAO
 {
     public class HRAccountDAO
     {
-        private CandidateManagementContext _context;
+        private CandidateManagementContext context;
         private static HRAccountDAO instance = null;
         public static HRAccountDAO Instance
         {
@@ -19,15 +19,37 @@ namespace CandidateManagement_DAO
         }
         public HRAccountDAO()
         {
-            _context = new CandidateManagementContext();
+            context = new CandidateManagementContext();
         }
         public Hraccount? GetHraccountByEmail(string email)
         {
-            return _context.Hraccounts.SingleOrDefault(m => m.Email.Equals(email));
+            return context.Hraccounts.SingleOrDefault(m => m.Email.Equals(email));
         }
         public IEnumerable<Hraccount> GetHraccounts()
         {
-            return _context.Hraccounts.ToList();
+            return context.Hraccounts.ToList();
+        }
+        public bool UpdateHrAccount(string email, string fullName, string password)
+        {
+            bool isSuccess = false;
+            Hraccount? hraccount = GetHraccountByEmail(email);
+            try
+            {
+                if (hraccount != null)
+                {
+                    hraccount.FullName = fullName;
+                    hraccount.Password = password;
+                    context.Entry(hraccount).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                    context.Entry(hraccount).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    context.SaveChanges();
+                    isSuccess = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return isSuccess;
         }
     }
 }

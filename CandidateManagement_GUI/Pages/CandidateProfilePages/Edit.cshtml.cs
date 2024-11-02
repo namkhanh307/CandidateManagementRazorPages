@@ -48,18 +48,15 @@ namespace CandidateManagement_GUI.Pages.CandidateProfilePages
             }
 
             bool updateSuccess = _candidateProfileService.UpdateCandidateProfile(CandidateProfile);
-            //Lỗi dưới DAO à , đợi chút xíu nhé
 
             if (!updateSuccess)
             {
-                // Kiểm tra nếu CandidateProfile không tồn tại
                 if (!CandidateProfileExists(CandidateProfile.CandidateId))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    // Throw exception hoặc ghi log nếu cần thiết
                     throw new DbUpdateConcurrencyException();
                 }
             }

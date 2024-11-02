@@ -20,30 +20,27 @@ namespace CandidateManagement_GUI.Pages.HrAccountPages
         {
             _hrAccountService = hRAccountService;
         }
-
         [BindProperty]
         public Hraccount Hraccount { get; set; } = default!;
+        string? EmailUser => HttpContext.Session.GetString("EmailUser") ?? "";
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet()
         {
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(EmailUser))
             {
                 return NotFound();
             }
 
-            string? email = HttpContext.Session.GetString("EmailUser") ?? "";
-
-            var hraccount = _hrAccountService.GetHraccountByEmail(email);
-            if (hraccount == null)
+            Hraccount = _hrAccountService.GetHraccountByEmail(EmailUser);
+            if (Hraccount == null)
             {
                 return NotFound();
             }
-            Hraccount = hraccount;
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -51,7 +48,21 @@ namespace CandidateManagement_GUI.Pages.HrAccountPages
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            bool updateSuccess = _hrAccountService.UpdateHrAccount(Hraccount.Email, Hraccount.FullName, Hraccount.Password);
+
+            if (!updateSuccess)
+            {
+                if (!HraccountExists(Hraccount.Email))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw new DbUpdateConcurrencyException();
+                }
+            }
+
+            return RedirectToPage("./Edit");
         }
 
         private bool HraccountExists(string email)
