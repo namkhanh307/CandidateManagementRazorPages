@@ -7,7 +7,7 @@
     string? roleId = HttpContext.Session.GetString("RoleID");
     if (roleId != null && !roleId.Equals("1"))
     {
-        Response.Redirect("/NotPermission");
+        Response.Redirect("/Error");
     }
 }
 
@@ -18,7 +18,7 @@
         <a asp-page="Create" class="btn btn-success mb-3">Create New</a>
     </p>
 
-    <form method="get" asp-page="./Index" class="mb-3">
+    <form id="searchForm" method="get" asp-page="./Index" class="mb-3">
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary">Search</button>
-                <button type="button" class="btn btn-secondary" onclick="clearFields()">Clear</button>
+                <button type="button" class="btn btn-primary me-2" onclick="clearFields()">Clear</button>
             </div>
         </div>
     </form>
@@ -46,7 +46,7 @@
                 <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].Birthday)</th>
                 <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].ProfileShortDescription)</th>
                 <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].ProfileUrl)</th>
-                <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].PostingId)</th>
+                <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].Posting.JobPostingTitle)</th>
                 <th class="text-center" style="width: 200px;">Actions</th>
             </tr>
         </thead>
@@ -58,7 +58,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Birthday)</td>
                     <td>@Html.DisplayFor(modelItem => item.ProfileShortDescription)</td>
                     <td>@Html.DisplayFor(modelItem => item.ProfileUrl)</td>
-                    <td>@Html.DisplayFor(modelItem => item.PostingId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Posting.JobPostingTitle)</td>
                     <td class="text-center">
                         <a asp-page="./Edit" asp-route-id="@item.CandidateId" class="btn btn-sm btn-warning me-1">Edit</a>
                         <a asp-page="./Details" asp-route-id="@item.CandidateId" class="btn btn-sm btn-info me-1">Details</a>
@@ -92,7 +92,7 @@
     function clearFields() {
         document.getElementById('fullname').value = '';
         document.getElementById('birthday').value = '';
-        // Optionally, you can also submit the form to reset the search results
         document.getElementById('searchForm').submit();
     }
+
 </script>

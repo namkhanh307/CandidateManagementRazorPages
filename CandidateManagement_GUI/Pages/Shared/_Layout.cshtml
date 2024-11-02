@@ -28,6 +28,9 @@
                             <li class="nav-item">   
                                 <a class="nav-link text-white" asp-area="" asp-page-handler="Logout" asp-page="/LoginPages/Login">Log out</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white @(ViewData["ActivePage"] == "MyProfile" ? "active" : "")" asp-area="" asp-page="/HrAccountPages/Details">My Profile</a>
+                            </li>
                         }                      
                     </ul>
                 </div>

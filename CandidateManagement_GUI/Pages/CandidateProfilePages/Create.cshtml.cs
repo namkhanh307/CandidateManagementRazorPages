@@ -28,7 +28,7 @@ namespace CandidateManagement_GUI.Pages.CandidateProfilePages
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public IActionResult OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid || _candidateProfileService.GetCandidateProfiles() == null || CandidateProfile == null)
             {

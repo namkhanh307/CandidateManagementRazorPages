@@ -1,4 +1,5 @@
 ﻿using CandidateManagement_BusinessObjects.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CandidateManagement_DAO
 {
@@ -23,11 +24,11 @@ namespace CandidateManagement_DAO
         }
         public CandidateProfile? GetCandidateProfileById(string id)
         {
-            return context.CandidateProfiles.SingleOrDefault(m => m.CandidateId.Equals(id));
+            return context.CandidateProfiles.Include(c => c.Posting).SingleOrDefault(m => m.CandidateId.Equals(id));
         }
         public List<CandidateProfile> GetCandidateProfiles()
         {
-            return context.CandidateProfiles.ToList();
+           return context.CandidateProfiles.Include(p => p.Posting).ToList();
         }
         public bool AddCandidateProfile(CandidateProfile candidateProfile)
         {
@@ -90,7 +91,7 @@ namespace CandidateManagement_DAO
         }
         public (List<CandidateProfile> candidates, int totalItems, int totalPages) SearchCandidates(string? fullname, DateTime? birthday, int pageNumber, int pageSize)
         {
-            var candidates = context.CandidateProfiles.ToList();
+            var candidates = context.CandidateProfiles.Include(c => c.Posting).ToList();
 
             var query = candidates.AsQueryable();
 

@@ -25,8 +25,10 @@ namespace CandidateManagement_GUI.Pages.LoginPages
                 Hraccount account = _hrAccountService.GetHraccountByEmail(email);
                 if (account != null && account.Password!.Equals(password))
                 {
-                    string? RoleID = account.MemberRole.ToString() ?? "";
-                    HttpContext.Session.SetString("RoleID", RoleID);
+                    string? roleId = account.MemberRole.ToString() ?? "";
+                    string? emailUser = account.Email ?? "";
+                    HttpContext.Session.SetString("RoleID", roleId);
+                    HttpContext.Session.SetString("EmailUser", email);
                     Response.Redirect("/CandidateProfilePages");
                 }
                 else

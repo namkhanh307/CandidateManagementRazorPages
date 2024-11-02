@@ -7,7 +7,7 @@
     string? roleId = HttpContext.Session.GetString("RoleID");
     if (roleId != null && !roleId.Equals("1"))
     {
-        Response.Redirect("/NotPermission");
+        Response.Redirect("/Error");
     }
 
 }
@@ -30,8 +30,8 @@
             <dt class="col-sm-3 fw-bold">Profile URL</dt>
             <dd class="col-sm-9">@Html.DisplayFor(model => model.CandidateProfile.ProfileUrl)</dd>
 
-            <dt class="col-sm-3 fw-bold">Posting ID</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.CandidateProfile.PostingId)</dd>
+            <dt class="col-sm-3 fw-bold">Posting Title</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.CandidateProfile.Posting.JobPostingTitle)</dd>
         </dl>
     </div>
 

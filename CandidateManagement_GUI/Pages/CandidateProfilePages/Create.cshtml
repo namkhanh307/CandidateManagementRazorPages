@@ -7,7 +7,7 @@
     string? roleId = HttpContext.Session.GetString("RoleID");
     if (roleId != null && !roleId.Equals("1"))
     {
-        Response.Redirect("/NotPermission");
+        Response.Redirect("/Error");
     }
 }
 
@@ -51,8 +51,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="CandidateProfile.PostingId" class="form-label fw-bold"></label>
-                    <select asp-for="CandidateProfile.PostingId" class="form-select" asp-items="ViewBag.PostingId"></select>
+                    <label asp-for="CandidateProfile.Posting.JobPostingTitle" class="form-label fw-bold"></label>
+                    <select asp-for="CandidateProfile.PostingId" class="form-select" asp-items="@ViewBag.PostingId"></select>
                 </div>
 
                 <div class="d-flex justify-content-between">
