@@ -3,6 +3,13 @@
 
 @{
     ViewData["Title"] = "Edit Candidate Profile";
+    ViewData["ActivePage"] = "CandidateProfile";
+    string? roleId = HttpContext.Session.GetString("RoleID");
+    if (roleId != null && !roleId.Equals("1"))
+    {
+        Response.Redirect("/NotPermission");
+    }
+
 }
 
 <h1 class="text-center mt-4 text-primary">@ViewData["Title"]</h1>
@@ -41,9 +48,7 @@
 
             <div class="mb-3">
                 <label asp-for="CandidateProfile.PostingId" class="form-label fw-bold"></label>
-                <select asp-for="CandidateProfile.PostingId" class="form-select" asp-items="ViewBag.PostingId">
-                    <option value="">Select a posting</option>
-                </select>
+                <select asp-for="CandidateProfile.PostingId" class="form-select" asp-items="ViewBag.PostingId"></select>
                 <span asp-validation-for="CandidateProfile.PostingId" class="text-danger"></span>
             </div>
 
@@ -54,7 +59,6 @@
         </form>
     </div>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

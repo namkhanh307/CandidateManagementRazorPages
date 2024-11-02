@@ -20,12 +20,12 @@
                         @if (!Context.Request.Path.Value.Contains("/LoginPages"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/CandidateProfilePages/Index">Candidates Profile</a>
+                                <a class="nav-link text-white @(ViewData["ActivePage"] == "CandidateProfile" ? "active" : "")" asp-area="" asp-page="/CandidateProfilePages/Index">Candidates Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/JobPostingPages/Index">Job Postings</a>
+                                <a class="nav-link text-white @(ViewData["ActivePage"] == "JobPosting" ? "active" : "")" asp-area="" asp-page="/JobPostingPages/Index">Job Postings</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item">   
                                 <a class="nav-link text-white" asp-area="" asp-page-handler="Logout" asp-page="/LoginPages/Login">Log out</a>
                             </li>
                         }                      

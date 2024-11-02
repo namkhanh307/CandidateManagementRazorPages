@@ -2,7 +2,14 @@
 @model CandidateManagement_GUI.Pages.CandidateProfilePages.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete Candidate Profile";
+    ViewData["Title"] = "Delete Candidate Profile"; 
+    ViewData["ActivePage"] = "CandidateProfile";
+    string? roleId = HttpContext.Session.GetString("RoleID");
+    if (roleId != null && !roleId.Equals("1"))
+    {
+        Response.Redirect("/NotPermission");
+    }
+
 }
 
 <h1 class="text-center mt-4 text-danger">@ViewData["Title"]</h1>
@@ -10,7 +17,6 @@
 <div class="container mt-5">
     <h3 class="text-warning">Are you sure you want to delete this candidate profile?</h3>
     <div class="card shadow-sm p-4 mt-4">
-        <h4 class="text-primary mb-3">Candidate Profile Details</h4>
         <dl class="row">
             <dt class="col-sm-3 fw-bold">Full Name</dt>
             <dd class="col-sm-9">@Html.DisplayFor(model => model.CandidateProfile.Fullname)</dd>

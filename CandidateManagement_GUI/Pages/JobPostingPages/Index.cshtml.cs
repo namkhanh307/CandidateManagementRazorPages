@@ -14,10 +14,16 @@ namespace CandidateManagement_GUI.Pages.JobPostingPages
         }
 
         public IList<JobPosting> JobPosting { get; set; } = default!;
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
 
-        public void OnGet()
+        public void OnGet(int pageNumber = 1, int pageSize = 3)
         {
-            JobPosting = _jobPostingService.GetJobPostings();
+            var (items, totalItems, totalPages) = _jobPostingService.GetJobPostings(pageNumber, pageSize);
+
+            JobPosting = items;
+            CurrentPage = pageNumber;
+            TotalPages = totalPages;
         }
     }
 }

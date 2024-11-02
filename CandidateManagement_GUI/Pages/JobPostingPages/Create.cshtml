@@ -2,53 +2,56 @@
 @model CandidateManagement_GUI.Pages.JobPostingPages.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Job Posting"; 
+    ViewData["ActivePage"] = "JobPosting";
+    string? roleId = HttpContext.Session.GetString("RoleID");
+    if (roleId != null && !roleId.Equals("1"))
+    {
+        Response.Redirect("/Error");
+    }
 }
 
-<h1>Create</h1>
+<h1 class="text-center mt-4">@ViewData["Title"]</h1>
 
-<h4>Job Posting</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="container mt-5">
+    <hr class="mb-4"/>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" class="shadow p-4 rounded bg-light">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            <div class="form-group">
-                <label asp-for="JobPosting.PostingId" class="control-label"></label>
-                <input asp-for="JobPosting.PostingId" class="form-control" />
-                <span asp-validation-for="JobPosting.PostingId" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="JobPosting.PostingId" class="control-label fw-bold"></label>
+                    <input asp-for="JobPosting.PostingId" class="form-control" />
+                    <span asp-validation-for="JobPosting.PostingId" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="JobPosting.JobPostingTitle" class="control-label"></label>
-                <input asp-for="JobPosting.JobPostingTitle" class="form-control" />
-                <span asp-validation-for="JobPosting.JobPostingTitle" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="JobPosting.JobPostingTitle" class="control-label fw-bold"></label>
+                    <input asp-for="JobPosting.JobPostingTitle" class="form-control" />
+                    <span asp-validation-for="JobPosting.JobPostingTitle" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="JobPosting.Description" class="control-label"></label>
-                <textarea asp-for="JobPosting.Description" class="form-control"></textarea>
-                <span asp-validation-for="JobPosting.Description" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="JobPosting.Description" class="control-label fw-bold"></label>
+                    <textarea asp-for="JobPosting.Description" class="form-control"></textarea>
+                    <span asp-validation-for="JobPosting.Description" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="JobPosting.PostedDate" class="control-label"></label>
-                <input asp-for="JobPosting.PostedDate" class="form-control" type="date" />
-                <span asp-validation-for="JobPosting.PostedDate" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="JobPosting.PostedDate" class="control-label fw-bold"></label>
+                    <input asp-for="JobPosting.PostedDate" class="form-control" type="date" />
+                    <span asp-validation-for="JobPosting.PostedDate" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="d-flex justify-content-between">
+                    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
-</div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

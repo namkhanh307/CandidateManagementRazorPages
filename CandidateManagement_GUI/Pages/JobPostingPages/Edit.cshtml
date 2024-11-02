@@ -2,43 +2,45 @@
 @model CandidateManagement_GUI.Pages.JobPostingPages.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Job Posting"; 
+    ViewData["ActivePage"] = "JobPosting";
+    string? roleId = HttpContext.Session.GetString("RoleID");
+    if (roleId != null && !roleId.Equals("1"))
+    {
+        Response.Redirect("/Error");
+    }
 }
 
-<h1>Edit</h1>
 
-<h4>JobPosting</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<h1 class="text-center mt-4 text-primary">@ViewData["Title"]</h1>
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="JobPosting.PostingId" />
-            <div class="form-group">
-                <label asp-for="JobPosting.JobPostingTitle" class="control-label"></label>
-                <input asp-for="JobPosting.JobPostingTitle" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="JobPosting.JobPostingTitle" class="control-label" fw-bold"></label>
+                <input asp-for="JobPosting.JobPostingTitle" class="form-control" placeholder="Enter title" />
                 <span asp-validation-for="JobPosting.JobPostingTitle" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="JobPosting.Description" class="control-label"></label>
-                <input asp-for="JobPosting.Description" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="JobPosting.Description" class="control-label" fw-bold"></label>
+                <input asp-for="JobPosting.Description" class="form-control" placeholder="Enter Description" />
                 <span asp-validation-for="JobPosting.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="JobPosting.PostedDate" class="control-label"></label>
-                <input asp-for="JobPosting.PostedDate" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="JobPosting.PostedDate" class="control-label" fw-bold"></label>
+                <input asp-for="JobPosting.PostedDate" class="form-control" placeholder="YYYY-MM-DD" />
                 <span asp-validation-for="JobPosting.PostedDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="d-flex gap-2">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

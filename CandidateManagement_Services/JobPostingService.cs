@@ -19,6 +19,21 @@ namespace CandidateManagement_Services
 
         public List<JobPosting> GetJobPostings() => _jobPostingRepo.GetJobPostings();
 
+        public (List<JobPosting> Items, int TotalItems, int TotalPages) GetJobPostings(int pageNumber, int pageSize)
+        {
+            var allJobPostings = _jobPostingRepo.GetJobPostings();
+            var totalItems = allJobPostings.Count();
+
+            var pagedProfiles = allJobPostings
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            return (pagedProfiles, totalItems, totalPages);
+        }
+
         public bool UpdateJobPosting(JobPosting jobPosting) => _jobPostingRepo.UpdateJobPosting(jobPosting);
     }
 }

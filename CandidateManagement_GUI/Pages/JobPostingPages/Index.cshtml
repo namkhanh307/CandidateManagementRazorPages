@@ -2,47 +2,61 @@
 @model CandidateManagement_GUI.Pages.JobPostingPages.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Job Postings";
+    ViewData["ActivePage"] = "JobPosting";
+    string? roleId = HttpContext.Session.GetString("RoleID");
+    if (roleId != null && !roleId.Equals("1"))
+    {
+        Response.Redirect("/Error");
+    }
 }
 
-<h1>Index</h1>
+<h1 class="text-center mt-4 text-primary">@ViewData["Title"]</h1>
+<div class="container mt-4">
+    <p>
+        <a asp-page="Create" class="btn btn-success mb-3">Create New</a>
+    </p>
+    <table class="table table-striped table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.JobPosting[0].JobPostingTitle)</th>
+                <th>@Html.DisplayNameFor(model => model.JobPosting[0].Description)</th>
+                <th>@Html.DisplayNameFor(model => model.JobPosting[0].PostedDate)</th>
+                <th class="text-center" style="width: 200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.JobPosting) 
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.JobPostingTitle)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PostedDate)</td>
+                    <td class ="text-center">
+                        <a asp-page="./Edit" asp-route-id="@item.PostingId" class="btn btn-sm btn-warning me-1">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.PostingId" class="btn btn-sm btn-info me-1">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.PostingId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-between align-items-center my-3">
+    <div>
+        @if (Model.CurrentPage > 1)
+        {
+            <a class="btn btn-sm btn-info me-1" asp-page="./Index" asp-route-pageNumber="@(Model.CurrentPage - 1)">Previous</a>
+        }
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.JobPosting[0].JobPostingTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobPosting[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobPosting[0].PostedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.JobPosting) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobPostingTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostedDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.PostingId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.PostingId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.PostingId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a class="btn btn-sm @(i == Model.CurrentPage ? "btn-primary" : "btn-light") me-1" asp-page="./Index" asp-route-pageNumber="@i">@i</a>
+        }
+
+        @if (Model.CurrentPage < Model.TotalPages)
+        {
+            <a class="btn btn-sm btn-info me-1" asp-page="./Index" asp-route-pageNumber="@(Model.CurrentPage + 1)">Next</a>
+        }
+    </div>
+</div>

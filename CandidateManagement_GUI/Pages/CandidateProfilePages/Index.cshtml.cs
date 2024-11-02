@@ -17,7 +17,7 @@ namespace CandidateManagement_GUI.Pages.CandidateProfilePages
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
-        public void OnGet(int pageNumber = 1, int pageSize = 20)
+        public void OnGet(int pageNumber = 1, int pageSize = 3)
         {
             var (items, totalItems, totalPages) = _candidateProfileService.GetCandidateProfiles(pageNumber, pageSize);
 

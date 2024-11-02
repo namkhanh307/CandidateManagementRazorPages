@@ -3,13 +3,18 @@
 
 @{
     ViewData["Title"] = "Candidate Profile Details";
+    ViewData["ActivePage"] = "CandidateProfile";
+    string? roleId = HttpContext.Session.GetString("RoleID");
+    if (roleId != null && !roleId.Equals("1"))
+    {
+        Response.Redirect("/NotPermission");
+    }
 }
 
 <h1 class="text-center mt-4 text-primary">@ViewData["Title"]</h1>
 
 <div class="container mt-5">
     <div class="card shadow-sm p-4">
-        <h4 class="text-secondary mb-3">Profile Information</h4>
         <dl class="row">
             <dt class="col-sm-3 fw-bold">Full Name</dt>
             <dd class="col-sm-9">@Html.DisplayFor(model => model.CandidateProfile.Fullname)</dd>
