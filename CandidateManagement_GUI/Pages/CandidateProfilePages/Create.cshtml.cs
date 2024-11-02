@@ -28,13 +28,18 @@ namespace CandidateManagement_GUI.Pages.CandidateProfilePages
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             if (!ModelState.IsValid || _candidateProfileService.GetCandidateProfiles() == null || CandidateProfile == null)
             {
                 return Page();
             }
-
+            var existedCandidate = _candidateProfileService.GetCandidateProfileById(CandidateProfile.CandidateId);
+            if (existedCandidate != null)
+            {
+                ModelState.AddModelError("CandidateProfile.CandidateId", "A candidate with this ID already exists.");
+                return Page();
+            }
             _candidateProfileService.AddCandidateProfile(CandidateProfile);
             return RedirectToPage("./Index");
         }

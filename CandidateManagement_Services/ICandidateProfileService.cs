@@ -4,9 +4,9 @@ namespace CandidateManagement_Services
 {
     public interface ICandidateProfileService
     {
-        (List<CandidateProfile> Items, int TotalItems, int TotalPages) GetCandidateProfiles(int pageNumber, int pageSize);
         CandidateProfile? GetCandidateProfileById(string id);
         List<CandidateProfile> GetCandidateProfiles();
+        (List<CandidateProfile> candidates, int totalItems, int totalPages) SearchCandidates(string? fullname, DateTime? birthday, int pageNumber, int pageSize);
         bool AddCandidateProfile(CandidateProfile candidateProfile);
         bool DeleteCandidateProfile(CandidateProfile candidateProfile);
         bool UpdateCandidateProfile(CandidateProfile candidateProfile);

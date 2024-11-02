@@ -28,7 +28,12 @@ namespace CandidateManagement_GUI.Pages.JobPostingPages
             {
                 return Page();
             }
-
+            var existedJobPosting = _jobPostingService.GetJobPostingById(JobPosting.PostingId);
+            if (existedJobPosting != null)
+            {
+                ModelState.AddModelError("JobPosting.PostingId", "A job post with this ID already exists.");
+                return Page();
+            }
             _jobPostingService.AddJobPosting(JobPosting);
             return RedirectToPage("./Index");
         }

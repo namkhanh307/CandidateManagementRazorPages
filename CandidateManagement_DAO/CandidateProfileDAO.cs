@@ -88,5 +88,30 @@ namespace CandidateManagement_DAO
             }
             return isSuccess;
         }
+        public (List<CandidateProfile> candidates, int totalItems, int totalPages) SearchCandidates(string? fullname, DateTime? birthday, int pageNumber, int pageSize)
+        {
+            var candidates = context.CandidateProfiles.ToList();
+
+            var query = candidates.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(fullname))
+            {
+                query = query.Where(c => c.Fullname.Contains(fullname)); 
+            }
+
+            if (birthday.HasValue)
+            {
+                query = query.Where(c => c.Birthday == birthday.Value.Date); 
+            }
+
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            return (items, totalItems, totalPages);
+        }
+
+
     }
 }

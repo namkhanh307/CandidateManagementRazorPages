@@ -1,6 +1,7 @@
 ﻿using CandidateManagement_BusinessObjects.Models;
 using CandidateManagement_Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Routing.Matching;
 
 namespace CandidateManagement_GUI.Pages.CandidateProfilePages
 {
@@ -17,9 +18,9 @@ namespace CandidateManagement_GUI.Pages.CandidateProfilePages
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
-        public void OnGet(int pageNumber = 1, int pageSize = 3)
+        public void OnGet(string fullname, DateTime? birthday, int pageNumber = 1, int pageSize = 3)
         {
-            var (items, totalItems, totalPages) = _candidateProfileService.GetCandidateProfiles(pageNumber, pageSize);
+            var (items, totalItems, totalPages) = _candidateProfileService.SearchCandidates(fullname, birthday, pageNumber, pageSize);
 
             CandidateProfile = items;
             CurrentPage = pageNumber;

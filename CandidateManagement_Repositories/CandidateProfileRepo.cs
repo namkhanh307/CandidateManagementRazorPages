@@ -14,5 +14,7 @@ namespace CandidateManagement_Repositories
         public List<CandidateProfile> GetCandidateProfiles() => CandidateProfileDAO.Instance.GetCandidateProfiles();
 
         public bool UpdateCandidateProfile(CandidateProfile candidateProfile) => CandidateProfileDAO.Instance.UpdateCandidateProfile(candidateProfile);
+
+        public (List<CandidateProfile> candidates, int totalItems, int totalPages) SearchCandidates(string? fullname, DateTime? birthday, int pageNumber, int pageSize) => CandidateProfileDAO.Instance.SearchCandidates(fullname, birthday, pageNumber, pageSize);
     }
 }
