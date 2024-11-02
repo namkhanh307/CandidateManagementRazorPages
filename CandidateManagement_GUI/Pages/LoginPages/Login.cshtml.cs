@@ -34,5 +34,10 @@ namespace CandidateManagement_GUI.Pages.LoginPages
             }
             
         }
+        public void OnGetLogout()
+        {
+            HttpContext.Session.SetString("RoleID", "");
+            Response.Redirect("/LoginPages/Login");
+        }
     }
 }

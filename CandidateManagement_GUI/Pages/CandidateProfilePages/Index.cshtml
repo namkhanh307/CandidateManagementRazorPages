@@ -2,59 +2,43 @@
 @model CandidateManagement_GUI.Pages.CandidateProfilePages.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Candidate Profiles";
 }
 
-<h1>Index</h1>
+<h1 class="text-center mt-4 text-primary">@ViewData["Title"]</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CandidateProfile[0].Fullname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CandidateProfile[0].Birthday)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CandidateProfile[0].ProfileShortDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CandidateProfile[0].ProfileUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CandidateProfile[0].PostingId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.CandidateProfile) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fullname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Birthday)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfileShortDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfileUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostingId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CandidateId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CandidateId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CandidateId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <p>
+        <a asp-page="Create" class="btn btn-success mb-3">Create New</a>
+    </p>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].Fullname)</th>
+                <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].Birthday)</th>
+                <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].ProfileShortDescription)</th>
+                <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].ProfileUrl)</th>
+                <th>@Html.DisplayNameFor(model => model.CandidateProfile[0].PostingId)</th>
+                <th class="text-center" style="width: 200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CandidateProfile)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Fullname)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Birthday)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProfileShortDescription)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProfileUrl)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PostingId)</td>
+                    <td class="text-center">
+                        <a asp-page="./Edit" asp-route-id="@item.CandidateId" class="btn btn-sm btn-warning me-1">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.CandidateId" class="btn btn-sm btn-info me-1">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.CandidateId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
