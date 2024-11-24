@@ -1,5 +1,6 @@
 ﻿using CandidateManagement_BusinessObjects.Models;
 using CandidateManagement_Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CandidateManagement_GUI.Pages.JobPostingPages
